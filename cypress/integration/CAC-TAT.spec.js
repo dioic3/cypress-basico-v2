@@ -28,10 +28,27 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function() {
         cy.get('[id="firstName"]').click().type('Fulano') //clica no campo e digita o nome
         cy.get('[id="lastName"]').click().type('de Tal') //clica no campo e digita o sobrenome
-        cy.get('[id="email"]').click().type('fulanodetal@gmail.com') //clica no campo e digita o email
+        cy.get('[id="email"]').click().type('fulanodetal@gmai') //clica no campo e digita o email errado
         cy.get('[id=open-text-area]').click().type('Eu quero comer coco no jardim da vizinha amanhã cedo', {delay: 0}) //clica no campo e digita a mensagem
         cy.get('[type=submit]').click() //clica no botão de enviar
 
-        cy.get('[class="success"]').should('be.visible', 'Mensagem enviada com sucesso!') //verifica se a mensagem de sucesso aparece
+        cy.get('[class="error"]').should('be.visible', 'Valide os campos obrigatórios!') //verifica se a mensagem de erro parece
   })
-  
+
+    it('verifica que o campo de telefone só aceita números', function() {
+        cy.get('[id="phone"]').click().type('abcdefg') // tenta digitar letras no campo de telefone
+        cy.get('[id="phone"]').should('have.value', '') // verifica se o valor do campo continua vazio
+    })
+
+    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+        cy.get('[id="firstName"]').click().type('Fulano') //clica no campo e digita o nome
+        cy.get('[id="lastName"]').click().type('de Tal') //clica no campo e digita o sobrenome
+        cy.get('[id="email"]').click().type('fulanodetal@gmail.com') //clica no campo e digita o email
+        cy.get('[id="check"]').contains('Qual seu meio de contato preferencial?')
+        cy.get('[id="phone-checkbox"]').click() //clica no checkbox de telefone
+        cy.get('[class=field]').contains('Telefone') //verifica se o campo de telefone aparece
+        cy.get('[class=field]').contains('(obrigatório)')//clica no campo e digita o telefone
+        cy.get('[type=submit]').click() //clica no botão de enviar
+        cy.get('[class="error"]').should('be.visible', 'Valide os campos obrigatórios!') //verifica se a mensagem de erro aparece   
+    })
+})
