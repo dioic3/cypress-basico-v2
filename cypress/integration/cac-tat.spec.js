@@ -6,7 +6,7 @@ describe('parte 2 - cac-tact', () => {
         cy.get('input[type="checkbox"]').last().uncheck().should('not.be.checked')
     })
 
-    it('seleciona as opções de uma vez e desmarca de uma vez', function() {
+    it('seleciona as opções de uma vez e desmarca de uma vez', function () {
         cy.get('input[type="checkbox"]').should('have.length', 2).each(($check) => {
             console.log($check)
             cy.wrap($check).check()
@@ -16,7 +16,7 @@ describe('parte 2 - cac-tact', () => {
     })
 
 
-    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function () {
         cy.get('[id="firstName"]').click().type('Fulano') //clica no campo e digita o nome
         cy.get('[id="lastName"]').click().type('de Tal') //clica no campo e digita o sobrenome
         cy.get('[id="email"]').click().type('fulanodetal@gmail.com') //clica no campo e digita o email
@@ -26,5 +26,18 @@ describe('parte 2 - cac-tact', () => {
         cy.get('[class=field]').contains('(obrigatório)')//clica no campo e digita o telefone
         cy.get('[type=submit]').click() //clica no botão de enviar
         cy.get('[class="error"]').should('be.visible', 'Valide os campos obrigatórios!') //verifica se a mensagem de erro aparece   
+    })
+
+    it('seleciona um arquivo da pasta fixtures', function () {
+        cy.get('input[type="file"]').selectFile('cypress/fixtures/arquivo-teste.txt')
+    })
+
+    it('seleciona um arquivo simulando um drag-and-drop', function () { 
+        cy.get('input[type="file"]').selectFile('cypress/fixtures/arquivo-teste.txt', { action: 'drag-drop' })
+    })
+
+    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function () {
+        cy.fixture('arquivo-teste.txt').as('arquivoTeste')
+        cy.get('input[type="file"]').selectFile('@arquivoTeste')
     })
 })
