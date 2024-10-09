@@ -146,5 +146,16 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('[id="product"]').should('have.value','blog') //verifica se o produto youtube foi selecionado
     })
 
+    it('marca o tipo de atendimento "feedback', function() {
+        cy.get('[value="feedback"]').check() //marca o tipo de atendimento feedback
+    })
 
+    it.only('marca o tipo de atendimento', function() {
+        cy.get('[value="feedback"]').check() //marca o tipo de atendimento feedback
+        cy.get('[value="feedback"]').should('be.checked') //verifica se o tipo de atendimento feedback foi marcado
+        cy.get('[value="elogio"]').check() //marca o tipo de atendimento elogio
+        cy.get('[value="elogio"]').should('be.checked') //verifica se o tipo de atendimento elogio foi marcado
+        cy.get('[value="ajuda"]').check() //marca o tipo de atendimento ajuda
+        cy.get('[value="ajuda"]').should('be.checked') //verifica se o tipo de atendimento ajuda foi marcado
+    })
 })
