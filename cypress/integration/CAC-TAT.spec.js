@@ -97,5 +97,54 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('.success').should('be.visible', 'Mensagem enviada com sucesso!') //verifica se a mensagem de sucesso aparece
     })
 
-    it('')
+    it('seleciona um produto (youtube) por seu texto', function() {
+        //completando os campos
+        cy.get('[id="firstName"]').click().type('Fulano') //clica no campo e digita o nome
+        cy.get('[id="lastName"]').click().type('de Tal') //clica no campo e digita o sobrenome
+        cy.get('[id="email"]').click().type('fulanodetal@gmail.com') //clica no campo e digita o email
+        cy.get('[id="phone"]').click().type('11999999999') //clica no campo e digita o telefone
+        cy.get('[id="check"]').contains('Qual seu meio de contato preferencial?')
+        cy.get('[id="phone-checkbox"]').click() //clica no checkbox de telefone
+        cy.get('[class=field]').contains('Telefone') //verifica se o campo de telefone aparece
+        cy.get('[class=field]').contains('(obrigatório)')//clica no campo e digita o telefone
+        cy.get('[id="open-text-area"]').click().type('Mensagem de teste') //clica no campo e digita a mensagem
+
+        cy.get('[id="product"]').select('youtube') //seleciona o produto youtube
+        cy.get('[id="product"]').should('have.value','youtube') //verifica se o produto youtube foi selecionado
+    })
+
+    it('seleciona um produto (Mentoria) por seu valor', function() {
+        //completando os campos
+        cy.get('[id="firstName"]').click().type('Fulano') //clica no campo e digita o nome
+        cy.get('[id="lastName"]').click().type('de Tal') //clica no campo e digita o sobrenome
+        cy.get('[id="email"]').click().type('fulanodetal@gmail.com') //clica no campo e digita o email
+        cy.get('[id="phone"]').click().type('11999999999') //clica no campo e digita o telefone
+        cy.get('[id="check"]').contains('Qual seu meio de contato preferencial?')
+        cy.get('[id="phone-checkbox"]').click() //clica no checkbox de telefone
+        cy.get('[class=field]').contains('Telefone') //verifica se o campo de telefone aparece
+        cy.get('[class=field]').contains('(obrigatório)')//clica no campo e digita o telefone
+        cy.get('[id="open-text-area"]').click().type('Mensagem de teste') //clica no campo e digita a mensagem
+
+        cy.get('[id="product"]').select('mentoria') //seleciona o produto youtube
+        cy.get('[id="product"]').should('have.value','mentoria') //verifica se o produto youtube foi selecionado
+    })
+
+
+    it('seleciona um produto (blog) por seu valor', function() {
+        //completando os campos
+        cy.get('[id="firstName"]').click().type('Fulano') //clica no campo e digita o nome
+        cy.get('[id="lastName"]').click().type('de Tal') //clica no campo e digita o sobrenome
+        cy.get('[id="email"]').click().type('fulanodetal@gmail.com') //clica no campo e digita o email
+        cy.get('[id="phone"]').click().type('11999999999') //clica no campo e digita o telefone
+        cy.get('[id="check"]').contains('Qual seu meio de contato preferencial?')
+        cy.get('[id="phone-checkbox"]').click() //clica no checkbox de telefone
+        cy.get('[class=field]').contains('Telefone') //verifica se o campo de telefone aparece
+        cy.get('[class=field]').contains('(obrigatório)')//clica no campo e digita o telefone
+        cy.get('[id="open-text-area"]').click().type('Mensagem de teste') //clica no campo e digita a mensagem
+
+        cy.get('[id="product"]').select('blog') //seleciona o produto youtube
+        cy.get('[id="product"]').should('have.value','blog') //verifica se o produto youtube foi selecionado
+    })
+
+
 })
