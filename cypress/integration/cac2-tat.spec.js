@@ -36,8 +36,20 @@ describe('parte 2 - cac-tact', () => {
         cy.get('input[type="file"]').selectFile('cypress/fixtures/arquivo-teste.txt', { action: 'drag-drop' })
     })
 
-    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function () {
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function () {
         cy.fixture('arquivo-teste.txt').as('arquivoTeste')
         cy.get('input[type="file"]').selectFile('@arquivoTeste')
+    })
+
+    it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function () {
+        cy.get('[href="privacy.html"]').should('have.attr', 'href').and('include','privacy.html')
+    })
+
+    it.only('testa a página da política de privacidade de forma independente', function() {
+        cy.visit('src/privacy.html')
+        cy.get('[id="title"]').contains('CAC TAT - Política de privacidade')
+        cy.get('[id="white-background"]').contains("Não salvamos dados submetidos no formulário da aplicação CAC TAT.")
+        cy.get('[id="white-background"]').contains("Utilzamos as tecnologias HTML, CSS e JavaScript, para simular uma aplicação real.")
+        cy.get('[id="white-background"]').contains("No entanto, a aplicação é um exemplo, sem qualquer persistência de dados, e usada para fins de ensino.")
     })
 })
