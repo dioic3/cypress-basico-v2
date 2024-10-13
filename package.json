@@ -25,5 +25,8 @@
   "homepage": "https://github.com/wlsf82/cypress-basico-v2#readme",
   "devDependencies": {
     "cypress": "^9.5.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }

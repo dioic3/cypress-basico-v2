@@ -1,3 +1,5 @@
+
+var _ = require('lodash');
 describe('parte 2 - cac-tact', () => {
     beforeEach(() => cy.visit('src/index.html'))
     it('marca ambos checkboxes, depois desmarca o ultimo', () => {
@@ -45,15 +47,33 @@ describe('parte 2 - cac-tact', () => {
         cy.get('#privacy a').should('have.attr', 'href').and('include','privacy.html')
     })
 
-    it.only('acessa a página da política de privacidade removendo o target e então clicando no link', function() {
+    it('acessa a página da política de privacidade removendo o target e então clicando no link', function() {
         cy.get('#privacy a').invoke('removeAttr', 'target').click()
     })
 
-    it.only('testa a página da política de privacidade de forma independente', function() {
+    it('testa a página da política de privacidade de forma independente', function() {
         cy.get('#privacy a').invoke('removeAttr', 'target').click()
         cy.get('[id="title"]').contains('CAC TAT - Política de privacidade')
         cy.get('[id="white-background"]').contains("Não salvamos dados submetidos no formulário da aplicação CAC TAT.")
         cy.get('[id="white-background"]').contains("Utilzamos as tecnologias HTML, CSS e JavaScript, para simular uma aplicação real.")
         cy.get('[id="white-background"]').contains("No entanto, a aplicação é um exemplo, sem qualquer persistência de dados, e usada para fins de ensino.")
+    })
+
+    it('exibe mensagem por 3 segundos', function() {
+        cy.clock() // congela o relógio do navegador
+        cy.get('[type="submit"]').click() // clica no botão de enviar
+        cy.tick(3000) // avança o relógio três segundos (em milissegundos). Avanço este tempo para não perdê-lo esperando.
+        cy.get('[class="error"]').should('not.be.visible')
+        // (...) // verificação de que a mensagem não está mais visível
+      })
+
+    Cypress._.times(5, () => {
+        it('exibe mensagem por 3 segundos', function() {
+            cy.clock() // congela o relógio do navegador
+            cy.get('[type="submit"]').click() // clica no botão de enviar
+            cy.tick(3000) // avança o relógio três segundos (em milissegundos). Avanço este tempo para não perdê-lo esperando.
+            cy.get('[class="error"]').should('not.be.visible')
+            // (...) // verificação de que a mensagem não está mais visível
+          })
     })
 })
