@@ -42,11 +42,15 @@ describe('parte 2 - cac-tact', () => {
     })
 
     it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function () {
-        cy.get('[href="privacy.html"]').should('have.attr', 'href').and('include','privacy.html')
+        cy.get('#privacy a').should('have.attr', 'href').and('include','privacy.html')
+    })
+
+    it.only('acessa a página da política de privacidade removendo o target e então clicando no link', function() {
+        cy.get('#privacy a').invoke('removeAttr', 'target').click()
     })
 
     it.only('testa a página da política de privacidade de forma independente', function() {
-        cy.visit('src/privacy.html')
+        cy.get('#privacy a').invoke('removeAttr', 'target').click()
         cy.get('[id="title"]').contains('CAC TAT - Política de privacidade')
         cy.get('[id="white-background"]').contains("Não salvamos dados submetidos no formulário da aplicação CAC TAT.")
         cy.get('[id="white-background"]').contains("Utilzamos as tecnologias HTML, CSS e JavaScript, para simular uma aplicação real.")
